@@ -1,21 +1,24 @@
 
 const prevButton = document.querySelector('#prev');
 const nextButton = document.querySelector('#next');
+const buttonsBlock = document.querySelector('.section-buttons');
+const line = document.querySelector('.our-project__center-block');
+const projectElements = document.querySelectorAll('.our-project__element');
 
-const slider = (element, param) => {
-    element.addEventListener('click', () => {
-        const sliderLine = document.querySelector('.our-project__center-block');
-        let step = 0;
-        if(param == prev) {
-            step = step - 570;
-            sliderLine.style.left = step + 'px';
-        }
-        if(param == next) {
-            sliderLine.style.left = step + 'px';
-        }
-        console.log(step);
-    });
-}
+let currentStep = 0;
+let currentLinePosition = 0;
 
-slider(prevButton, prev);
-slider(nextButton, next);
+buttonsBlock.addEventListener('click', (event) => {
+    let target = event.target.id;
+
+    if(currentLinePosition < projectElements.length - 2 && target == 'next') {
+        currentStep -= 570;
+        currentLinePosition++;
+    } 
+
+    if(currentLinePosition > 0 && target == 'prev') {
+        currentStep += 570;
+        currentLinePosition--;
+    }
+    line.style.left = currentStep + 'px';
+});
